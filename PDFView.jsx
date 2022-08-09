@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {StyleSheet, Dimensions, View, Text} from 'react-native';
 import Pdf from 'react-native-pdf';
 
-const PDFExample = (pdf: any) => {
+const PDFExample = ({params}) => {
   const source = {
-    uri: pdf,
-    cache: true,
+    uri: params.uri,
   };
   //const source = require('./test.pdf');  // ios only
   //const source = {uri:'bundle-assets://test.pdf' };
