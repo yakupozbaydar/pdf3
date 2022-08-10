@@ -9,7 +9,8 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{headerStyle: {backgroundColor: 'green'}}}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="PDFView" component={PDFView} />
       </Stack.Navigator>
