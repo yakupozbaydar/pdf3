@@ -1,11 +1,15 @@
+/* eslint-disable prettier/prettier */
+import {useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {StyleSheet, Dimensions, View, Text} from 'react-native';
-import {DocumentPickerResponse} from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
 
-const PDFExample: React.FC<DocumentPickerResponse[]> = ({route}) => {
+const PDFView: React.FC = () => {
+  const route = useRoute();
+  let data;
+  data = route?.params.result[0].uri;
   const source = {
-    uri: '',
+    uri: data,
     cache: true,
   };
   //const source = require('./test.pdf');  // ios only
@@ -20,14 +24,13 @@ const PDFExample: React.FC<DocumentPickerResponse[]> = ({route}) => {
     <>
       <View style={styles.container}>
         <Pdf
+          maxScale={1000}
           trustAllCerts={false}
           source={source}
-          onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`Number of pages: ${numberOfPages}`);
+          onLoadComplete={(numberOfPages) => {
             setNumber(numberOfPages);
           }}
-          onPageChanged={(page, numberOfPages) => {
-            console.log(`Current page: ${page}`);
+          onPageChanged={page => {
             setPage(page);
           }}
           onError={error => {
@@ -39,8 +42,6 @@ const PDFExample: React.FC<DocumentPickerResponse[]> = ({route}) => {
           style={styles.pdf}
           enablePaging
           enableAntialiasing
-          enableRTL
-          enableAnnotationRendering
         />
         <Text>
           {curPage}/{number}
@@ -59,8 +60,8 @@ const styles = StyleSheet.create({
   },
   pdf: {
     flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
   },
 });
-export default PDFExample;
+export default PDFView;

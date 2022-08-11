@@ -2,16 +2,13 @@ import * as React from 'react';
 
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import DocumentPicker, {
-  DirectoryPickerResponse,
   DocumentPickerResponse,
   isInProgress,
   types,
 } from 'react-native-document-picker';
 
 const Home = ({navigation}) => {
-  const [result, setResult] = React.useState<
-    Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | null
-  >();
+  const [result, setResult] = React.useState<Array<DocumentPickerResponse>>();
   const handleError = (err: unknown) => {
     if (DocumentPicker.isCancel(err)) {
       console.warn('cancelled');
@@ -24,16 +21,17 @@ const Home = ({navigation}) => {
       throw err;
     }
   };
-
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity
+        style={styles.box}
         onPress={() => {
           DocumentPicker.pick({
             type: types.pdf,
           })
             .then(setResult)
             .catch(handleError);
+          console.log(result);
         }}>
         <Text>Choose PDF file</Text>
       </TouchableOpacity>
@@ -44,7 +42,6 @@ const Home = ({navigation}) => {
         }}>
         <Text>Open PDF</Text>
       </TouchableOpacity>
-      <Text selectable>Result: {JSON.stringify(result, null, 2)}</Text>
     </View>
   );
 };
