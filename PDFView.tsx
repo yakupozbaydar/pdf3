@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import {useRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {StyleSheet, Dimensions, View, Text} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { StyleSheet, Dimensions, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import Pdf from 'react-native-pdf';
 
 const PDFView: React.FC = () => {
   const route = useRoute();
-  let data;
-  data = route?.params.result[0].uri;
+  const navigation = useNavigation();
+  let data = route?.params?.result[0].uri;
   const source = {
     uri: data,
     cache: true,
@@ -22,6 +22,16 @@ const PDFView: React.FC = () => {
   const [number, setNumber] = useState(0);
   return (
     <>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity style={styles.goBack} onPress={() => {
+          navigation.goBack();
+        }}>
+          <Text style={{ fontSize: 16 }}>Geri</Text>
+        </TouchableOpacity>
+        <TextInput clearButtonMode='while-editing'
+         keyboardType='number-pad'
+         value={curPage}/>
+      </View>
       <View style={styles.container}>
         <Pdf
           maxScale={1000}
@@ -42,8 +52,10 @@ const PDFView: React.FC = () => {
           style={styles.pdf}
           enablePaging
           enableAntialiasing
+          fitPolicy={2}
+          page={curPage}
         />
-        <Text>
+        <Text >
           {curPage}/{number}
         </Text>
       </View>
@@ -52,12 +64,24 @@ const PDFView: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer:{
+    flexDirection:"row",
+    justifyContent:"space-between"
+  },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center',
     marginTop: 25,
+    alignItems: "center",
   },
+  goBack: {
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 50,
+    height: 50,
+  }
+  ,
   pdf: {
     flex: 1,
     width: Dimensions.get('screen').width,
