@@ -10,14 +10,8 @@ const PDFView: React.FC = () => {
   let data = route?.params?.result[0].uri;
   const source = {
     uri: data,
-    cache: true,
+    cache: false,
   };
-  //const source = require('./test.pdf');  // ios only
-  //const source = {uri:'bundle-assets://test.pdf' };
-  //const source = {uri:'file:///sdcard/test.pdf'};
-  //const source = {uri:"data:application/pdf;base64,JVBERi0xLjcKJc..."};
-  //const source = {uri:"content://com.example.blobs/xxxxxxxx-...?offset=0&size=xxx"};
-  //const source = {uri:"blob:xxxxxxxx-...?offset=0&size=xxx"};
   const [curPage, setPage] = useState(0);
   const [number, setNumber] = useState(0);
   return (
@@ -28,9 +22,13 @@ const PDFView: React.FC = () => {
         }}>
           <Text style={{ fontSize: 16 }}>Geri</Text>
         </TouchableOpacity>
-        <TextInput clearButtonMode='while-editing'
-         keyboardType='number-pad'
-         value={curPage}/>
+        <TextInput
+        value={curPage.toFixed(0)}
+        style={styles.input} clearButtonMode="while-editing"
+          keyboardType="numeric"
+          onChangeText={(e) => setPage(Number(e))}
+          clearTextOnFocus
+          />
       </View>
       <View style={styles.container}>
         <Pdf
@@ -51,8 +49,6 @@ const PDFView: React.FC = () => {
           }}
           style={styles.pdf}
           enablePaging
-          enableAntialiasing
-          fitPolicy={2}
           page={curPage}
         />
         <Text >
@@ -64,20 +60,26 @@ const PDFView: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  headerContainer:{
-    flexDirection:"row",
-    justifyContent:"space-between"
+  input : {
+    borderWidth:1,
+    marginRight:10,
+    height:50,
+    width:40,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
     marginTop: 25,
-    alignItems: "center",
+    alignItems: 'center',
   },
   goBack: {
     borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 50,
     height: 50,
   }

@@ -9,10 +9,11 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen
           options={{
+            fullScreenGestureEnabled: true,
             animation: 'slide_from_right',
             gestureEnabled: true,
           }}

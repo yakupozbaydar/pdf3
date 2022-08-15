@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Alert} from 'react-native';
 import DocumentPicker, {
   DocumentPickerResponse,
   isInProgress,
@@ -31,16 +31,17 @@ const Home = ({navigation}) => {
           })
             .then(setResult)
             .catch(handleError);
-          console.log(result);
         }}>
-        <Text>Choose PDF file</Text>
+        <Text>PDF Seç</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.box}
         onPress={() => {
-          navigation.navigate('PDFView', {result});
+          result == null
+            ? Alert.alert('lütfen pdf seçin')
+            : navigation.navigate('PDFView', {result});
         }}>
-        <Text>Open PDF</Text>
+        <Text>PDF Görüntüle</Text>
       </TouchableOpacity>
     </View>
   );
