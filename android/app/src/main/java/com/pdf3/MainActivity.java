@@ -3,6 +3,7 @@ import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.reactlibrary.PdfLibPackage;
 
 public class MainActivity extends ReactActivity {
   @Override

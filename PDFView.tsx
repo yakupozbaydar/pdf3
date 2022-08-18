@@ -23,7 +23,6 @@ const PDFView: React.FC = () => {
           <Text style={{ fontSize: 16 }}>Geri</Text>
         </TouchableOpacity>
         <TextInput
-        value={curPage.toFixed(0)}
         style={styles.input} clearButtonMode="while-editing"
           keyboardType="numeric"
           onChangeText={(e) => setPage(Number(e))}
