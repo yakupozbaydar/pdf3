@@ -52,10 +52,3 @@ allprojects {
     }
     
 }
-android {
-  ...
-  dexOptions {
-      jumboMode = true
-  }
-  ...
-}
